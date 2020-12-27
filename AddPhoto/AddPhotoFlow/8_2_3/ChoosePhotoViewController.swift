@@ -8,6 +8,10 @@
 import UIKit
 import Photos
 
+protocol ChoosePhotoViewControllerDelegate {
+    func didSelect(images: [ChoosePhotoCellModel])
+}
+
 class ChoosePhotoViewController: UIViewController {
     
     private let cellSize = (UIScreen.main.bounds.width - 24 - 12) / 4
@@ -38,6 +42,7 @@ class ChoosePhotoViewController: UIViewController {
         button.addTarget(self, action: #selector(didTapOnAddButton), for: .touchUpInside)
         return button
     }()
+    var delegate: ChoosePhotoViewControllerDelegate?
     
     private lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
@@ -54,7 +59,9 @@ class ChoosePhotoViewController: UIViewController {
         return collectionView
     }()
     
-    private var dataModels = [ChoosePhotoCellModel]()
+    var dataModels = [ChoosePhotoCellModel]()
+    var allImages = [UIImage?]()
+    var testImages = [UIImage]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -98,37 +105,75 @@ class ChoosePhotoViewController: UIViewController {
         ].forEach { $0.isActive = true }
     }
     
+    func test() {
+//        guard !testImages.isEmpty,
+//              !dataModels.isEmpty else {
+//            return
+//        }
+//
+//        for (index, dataModel) in dataModels.enumerated() {
+//            testImages.forEach { image in
+//                print("Goood", index)
+//                print(dataModel.image, "DAta model")
+//                print(image, "Image")
+//                if dataModel.image == image {
+//                    print("Helllo")
+////                    dataModels[index].isSelect = true
+//                }
+//            }
+//        }
+//        collectionView.reloadData()
+    }
+    
+    func setImages(allImages: [UIImage?], selectedImages: [UIImage]) {
+        self.allImages = allImages
+        guard !allImages.isEmpty else {
+            return
+        }
+//        allImages.forEach { image in
+//            if let image = image {
+//                let model = ChoosePhotoCellModel(id: number, image: image, isSelect: false)
+//                dataModels.append(model)
+//            }
+//        }
+    }
+    
     @objc private func closeAction() {
         dismiss(animated: true, completion: nil)
     }
     
     @objc private func didTapOnAddButton() {
+        delegate?.didSelect(images: dataModels)
         dismiss(animated: true, completion: nil)
     }
     
     private func getImages() {
-        var isBegin = true
-        let assets = PHAsset.fetchAssets(with: .image, options: nil)
-        let manager = PHImageManager.default()
-        
-        assets.enumerateObjects({ (object, number, stop) in
-            let size = CGSize(width: self.cellSize, height: self.cellSize)
-            manager.requestImage(for: object, targetSize: size, contentMode: .aspectFill, options: nil) { [weak self] image, info in
-                if isBegin {
-                    let model = ChoosePhotoCellModel(id: number, image: image, isSelect: false)
-                    self?.dataModels.append(model)
-                    self?.collectionView.reloadData()
-                }
-            }
-        })
-        isBegin = dataModels.isEmpty
-        collectionView.reloadData()
+//        var isBegin = true
+//        let assets = PHAsset.fetchAssets(with: .image, options: nil)
+//        let manager = PHImageManager.default()
+//
+//        assets.enumerateObjects({ (object, number, stop) in
+//            let size = CGSize(width: self.cellSize, height: self.cellSize)
+//            manager.requestImage(for: object, targetSize: size, contentMode: .aspectFill, options: nil) { [weak self] image, info in
+//                if isBegin {
+//                    let model = ChoosePhotoCellModel(id: number, image: image, isSelect: false)
+//                    self?.dataModels.append(model)
+//                    self?.test()
+//                    self?.collectionView.reloadData()
+//                }
+//            }
+//        })
+//
+//        dataModels.reverse()
+//        isBegin = dataModels.isEmpty
+//        collectionView.reloadData()
     }
     
     func checkPermissionToPhotoLibrary() {
         let status = PHPhotoLibrary.authorizationStatus()
         switch status {
             case .authorized:
+                guard dataModels.isEmpty else { return }
                 getImages()
             case .denied, .notDetermined, .restricted:
                 PHPhotoLibrary.requestAuthorization() { [weak self] status in

@@ -21,6 +21,7 @@
 		8E5A88D825988ABA002E218F /* AddPhotoCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E5A88D725988ABA002E218F /* AddPhotoCollectionCell.swift */; };
 		8E5A88DD25988D9F002E218F /* AddPhotoCollectionCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E5A88DC25988D9F002E218F /* AddPhotoCollectionCellModel.swift */; };
 		8E68ABEB2597A39D00ED32C9 /* ChoosePhotoCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E68ABEA2597A39D00ED32C9 /* ChoosePhotoCellModel.swift */; };
+		8E93338D2598F8030023AF62 /* UIScreen+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E93338C2598F8030023AF62 /* UIScreen+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 		8E5A88D725988ABA002E218F /* AddPhotoCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhotoCollectionCell.swift; sourceTree = "<group>"; };
 		8E5A88DC25988D9F002E218F /* AddPhotoCollectionCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhotoCollectionCellModel.swift; sourceTree = "<group>"; };
 		8E68ABEA2597A39D00ED32C9 /* ChoosePhotoCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoosePhotoCellModel.swift; sourceTree = "<group>"; };
+		8E93338C2598F8030023AF62 /* UIScreen+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +94,7 @@
 			children = (
 				8E30E973258FC97300433EDA /* Colors */,
 				8E4F985A25927171005B1EB6 /* ButtonWithShadow.swift */,
+				8E93338C2598F8030023AF62 /* UIScreen+Extension.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -312,6 +315,7 @@
 				8E30E975258FC97300433EDA /* Colors.swift in Sources */,
 				8E5A88CD25986A81002E218F /* PreviewViewController.swift in Sources */,
 				8E4F985B25927171005B1EB6 /* ButtonWithShadow.swift in Sources */,
+				8E93338D2598F8030023AF62 /* UIScreen+Extension.swift in Sources */,
 				8E2E515C25966C2300D9A9D7 /* ChoosePhotoCollectionCell.swift in Sources */,
 				8E4F9856259270A2005B1EB6 /* AddPhotoViewController.swift in Sources */,
 				8E30E928258FC5C700433EDA /* AppDelegate.swift in Sources */,
@@ -485,6 +489,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HAXX8Q43JH;
 				INFOPLIST_FILE = AddPhoto/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -504,6 +509,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HAXX8Q43JH;
 				INFOPLIST_FILE = AddPhoto/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

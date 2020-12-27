@@ -7,16 +7,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "A8E88FD4-75EB-4F1D-A04E-EE0FBEDB6ABA"
+            uuid = "A55ED3E1-53BC-4C3E-A204-C12DCF3ACA8F"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AddPhoto/AddPhotoFlow/8_2_1/AddPhotoViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "165"
-            endingLineNumber = "165"
-            landmarkName = "test()"
+            startingLineNumber = "320"
+            endingLineNumber = "320"
+            landmarkName = "delete(with:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

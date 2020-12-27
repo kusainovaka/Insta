@@ -7,10 +7,13 @@
 
 import UIKit
 
+protocol AddPhotoCollectionCellDelegate {
+    func delete(with cell: AddPhotoCollectionCell)
+}
 class AddPhotoCollectionCell: UICollectionViewCell {
     
     static var id = "AddPhotoCollectionCell"
-    private let imageView: UIImageView = {
+    let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.masksToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -23,6 +26,7 @@ class AddPhotoCollectionCell: UICollectionViewCell {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+    var delegate: AddPhotoCollectionCellDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -55,11 +59,16 @@ class AddPhotoCollectionCell: UICollectionViewCell {
         ].forEach { $0.isActive = true }
         
         contentView.addSubview(deleteButton)
+        deleteButton.addTarget(self, action: #selector(didTap), for: .touchUpInside)
         [deleteButton.rightAnchor.constraint(equalTo: rightAnchor),
          deleteButton.bottomAnchor.constraint(equalTo: bottomAnchor),
          deleteButton.widthAnchor.constraint(equalToConstant: 31),
          deleteButton.heightAnchor.constraint(equalToConstant: 31)
         ].forEach { $0.isActive = true }
+    }
+    
+    @objc func didTap() {
+        delegate?.delete(with: self)
     }
     
     func config(with model: AddPhotoCollectionCellModel) {

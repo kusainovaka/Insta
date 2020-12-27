@@ -56,6 +56,7 @@ class AddPhotoViewController: UIViewController {
         let imageView = UIImageView()
         imageView.backgroundColor = .red
         imageView.layer.cornerRadius = 8
+        imageView.layer.masksToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -65,9 +66,10 @@ class AddPhotoViewController: UIViewController {
         .init(type: .empty), .init(type: .empty),
         .init(type: .empty), .init(type: .empty)
     ]
-    
-    private var selectedImaged = [UIImage?]()
-    
+
+//    private var selectedImaged = [UIImage?]()
+    private var dataModels = [ChoosePhotoCellModel]()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -104,7 +106,50 @@ class AddPhotoViewController: UIViewController {
           previewImageView.bottomAnchor.constraint(equalTo: collectionView.topAnchor, constant: -6),
           previewImageView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -6),
           previewImageView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 6),
-        ].forEach { $0.isActive = true }    }
+        ].forEach { $0.isActive = true }
+    
+        
+        let sixee = (UIScreen.main.bounds.width - 15) / 3
+        let firstLine = getLine()
+        previewImageView.addSubview(firstLine)
+        [ firstLine.topAnchor.constraint(equalTo: previewImageView.topAnchor),
+          firstLine.bottomAnchor.constraint(equalTo: previewImageView.bottomAnchor),
+          firstLine.widthAnchor.constraint(equalToConstant: 1),
+          firstLine.leftAnchor.constraint(equalTo: previewImageView.leftAnchor, constant: sixee),
+        ].forEach { $0.isActive = true }
+        
+        let secondLine = getLine()
+        previewImageView.addSubview(secondLine)
+        [ secondLine.topAnchor.constraint(equalTo: previewImageView.topAnchor),
+          secondLine.bottomAnchor.constraint(equalTo: previewImageView.bottomAnchor),
+          secondLine.widthAnchor.constraint(equalToConstant: 1),
+          secondLine.rightAnchor.constraint(equalTo: previewImageView.rightAnchor, constant: -sixee),
+        ].forEach { $0.isActive = true }
+        
+        
+        let bottomFirst = getLine()
+        previewImageView.addSubview(bottomFirst)
+        [ bottomFirst.rightAnchor.constraint(equalTo: previewImageView.rightAnchor),
+          bottomFirst.leftAnchor.constraint(equalTo: previewImageView.leftAnchor),
+          bottomFirst.heightAnchor.constraint(equalToConstant: 1),
+          bottomFirst.topAnchor.constraint(equalTo: previewImageView.topAnchor, constant: sixee),
+        ].forEach { $0.isActive = true }
+        
+        let bottomSecond = getLine()
+        previewImageView.addSubview(bottomSecond)
+        [ bottomSecond.rightAnchor.constraint(equalTo: previewImageView.rightAnchor),
+          bottomSecond.leftAnchor.constraint(equalTo: previewImageView.leftAnchor),
+          bottomSecond.heightAnchor.constraint(equalToConstant: 1),
+          bottomSecond.bottomAnchor.constraint(equalTo: previewImageView.bottomAnchor, constant: -sixee),
+        ].forEach { $0.isActive = true }
+    }
+    
+    func getLine() -> UIView {
+        let lineView = UIView()
+        lineView.backgroundColor = .white
+        lineView.translatesAutoresizingMaskIntoConstraints = false
+        return lineView
+    }
     
     func setupNavBar() {
         navigationController?.isNavigationBarHidden = true
@@ -126,6 +171,7 @@ class AddPhotoViewController: UIViewController {
 
 private extension AddPhotoViewController {
     @objc func didTapOnAddButton() {
+        navigationController?.popViewController(animated: true)
     }
     
     @objc func didTapOnClose() {
@@ -136,7 +182,7 @@ private extension AddPhotoViewController {
         let previewVC = PreviewViewController()
         var previewImages = [UIImage]()
         array.forEach { model in
-            if let image = model.image {
+            if model.type == .selected, let image = model.image {
                 previewImages.append(image)
             }
         }
@@ -147,54 +193,66 @@ private extension AddPhotoViewController {
     private func getImages() {
         let assets = PHAsset.fetchAssets(with: .image, options: nil)
         let manager = PHImageManager.default()
+        var isBegin = true
         
         assets.enumerateObjects({ (object, number, stop) in
             let size = CGSize(width: self.cellSize, height: self.cellSize)
             manager.requestImage(for: object, targetSize: size, contentMode: .aspectFill, options: nil) { [weak self] image, info in
-                if self?.selectedImaged.isEmpty == true {
-                    self?.selectedImaged.append(image)
-                    self?.previewImageView.image = image
-                    self?.test()
+                if isBegin {
+                    self?.eqallDataModel(with: image, id: number)
                 }
             }
         })
+       
+        isBegin = dataModels.isEmpty
+        
+        if let firstImage = dataModels.first?.image {
+            previewImageView.image = firstImage
+            dataModels[0].isSelect = true
+            test()
+        }
+    }
+    
+    func eqallDataModel(with image: UIImage?, id: Int) {
+        let isContains = dataModels.first { $0.id == id }
+        if isContains == nil {
+            let model = ChoosePhotoCellModel(id: id, image: image, isSelect: false)
+            dataModels.append(model)
+        }
     }
     
     func test() {
         // MARK: Set selected
-        guard !selectedImaged.isEmpty else {
+        guard !dataModels.isEmpty else {
             array[0].type = .add
-        
             collectionView.reloadData()
+            
             return
         }
-        
-        for (imageArray, model) in selectedImaged.enumerated() {
+        var selectedIndex: Int?
+
+        for (imageArray, model) in dataModels.enumerated() {
             for (arrayIndex, _) in array.enumerated() {
                 if imageArray == arrayIndex {
-                    array[arrayIndex].image = model
-                    array[arrayIndex].type = .selected
-                    break
+                    if model.isSelect {
+                        array[arrayIndex].image = model.image
+                        array[arrayIndex].type = .selected
+                        selectedIndex = arrayIndex + 1
+                    } else {
+                        array[arrayIndex].image = nil
+                        let lastIndex = array.count - 1
+                        if arrayIndex != lastIndex {
+                            if let some = selectedIndex {
+                                array[some].type = .add
+                            } else {
+                                array[arrayIndex + 1].type = .empty
+                            }
+                        }
+                    }
                 }
             }
         }
         
-        test2()
-    }
-    
-    func test2() {
-        for (index, model) in array.enumerated() {
-            let lastIndex = array.count - 1
-            if model.type == .add {
-                array[index].type = .empty
-            }
-            
-            if index != lastIndex {
-                if model.type == .selected {
-                    array[index + 1].type = .add
-                }
-            }
-        }
         collectionView.reloadData()
     }
     
@@ -237,6 +295,7 @@ extension AddPhotoViewController: UICollectionViewDataSource, UICollectionViewDe
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AddPhotoCollectionCell.id, for: indexPath) as? AddPhotoCollectionCell else { return .init() }
         cell.config(with: array[indexPath.row])
+        cell.delegate = self
         return cell
     }
     
@@ -246,6 +305,8 @@ extension AddPhotoViewController: UICollectionViewDataSource, UICollectionViewDe
             case .add:
                 let choosePhotoVC = ChoosePhotoViewController()
                 choosePhotoVC.modalPresentationStyle = .overFullScreen
+                choosePhotoVC.dataModels = dataModels
+                choosePhotoVC.delegate = self
                 navigationController?.present(choosePhotoVC, animated: true, completion: nil)
             case .selected:
                 guard let image = some.image else { return }
@@ -253,5 +314,33 @@ extension AddPhotoViewController: UICollectionViewDataSource, UICollectionViewDe
             case .empty:
                 break
         }
+    }
+}
+
+extension AddPhotoViewController: ChoosePhotoViewControllerDelegate {
+    func didSelect(images: [ChoosePhotoCellModel]) {
+        dataModels = images
+        
+        let some = dataModels.first { $0.isSelect == true }?.image
+        previewImageView.image = some
+        test()
+    }
+}
+
+extension AddPhotoViewController: AddPhotoCollectionCellDelegate {
+    func delete(with cell: AddPhotoCollectionCell) {
+        guard let index = collectionView.indexPath(for: cell) else { return }
+        dataModels[index.row].isSelect = false
+        
+        if index.row != 0 {
+            array[index.row - 1].type = .empty
+            previewImageView.image = array[index.row - 1].image
+        } else {
+//            array[0].type = .add
+//            previewImageView.image = nil
+        }
+        
+        collectionView.reloadData()
+        test()
     }
 }

@@ -8,7 +8,7 @@
 import UIKit
 
 struct ChoosePhotoCellModel {
-    let id: Int
-    let image: UIImage?
+    var id: Int
+    var image: UIImage?
     var isSelect: Bool
 }

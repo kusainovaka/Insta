@@ -29,7 +29,7 @@ class ProfileViewController: UIViewController {
         [addButton.centerYAnchor.constraint(equalTo: view.centerYAnchor),
          addButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
          addButton.heightAnchor.constraint(equalToConstant: 100),
-         addButton.widthAnchor.constraint(equalToConstant: 100),
+         addButton.widthAnchor.constraint(equalToConstant: 150),
         ].forEach { $0.isActive = true }
     }
     
