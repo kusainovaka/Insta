@@ -9,6 +9,7 @@ import UIKit
 
 class ChoosePhotoCell: UICollectionViewCell {
     
+    static var id = "ChoosePhotoCell"
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.masksToBounds = true
@@ -48,8 +49,7 @@ class ChoosePhotoCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         imageView.image = nil
-        selectedImageView.isHidden = true
-        coverView.isHidden = true
+        setSelect(with: false)
     }
     
     private func layoutUI() {
@@ -77,11 +77,11 @@ class ChoosePhotoCell: UICollectionViewCell {
     
     func config(with model: ChoosePhotoCellModel) {
         imageView.image = model.image
-        test(isHidden: model.isSelect)
+        setSelect(with: model.isSelect)
     }
     
-    func test(isHidden: Bool) {
-        selectedImageView.isHidden = !isHidden
-        coverView.isHidden = !isHidden
+    func setSelect(with selected: Bool) {
+        selectedImageView.isHidden = !selected
+        coverView.isHidden = !selected
     }
 }
