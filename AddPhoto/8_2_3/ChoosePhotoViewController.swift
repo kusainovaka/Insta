@@ -89,7 +89,6 @@ class ChoosePhotoViewController: UIViewController {
          collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ].forEach { $0.isActive = true }
         
-        
         view.addSubview(addButton)
         [addButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 25),
          addButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -30),
