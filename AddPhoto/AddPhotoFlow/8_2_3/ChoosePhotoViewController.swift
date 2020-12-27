@@ -59,7 +59,7 @@ class ChoosePhotoViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = Colors.colors.block_8_2_1_background
         
-        layoutUI()
+        setupConstraints()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -67,7 +67,7 @@ class ChoosePhotoViewController: UIViewController {
         checkPermissionToPhotoLibrary()
     }
     
-    private func layoutUI() {
+    private func setupConstraints() {
         view.addSubview(closeButton)
         [closeButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 12),
          closeButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 18),

@@ -17,6 +17,7 @@
 		8E30E975258FC97300433EDA /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E30E974258FC97300433EDA /* Colors.swift */; };
 		8E4F9856259270A2005B1EB6 /* AddPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4F9855259270A2005B1EB6 /* AddPhotoViewController.swift */; };
 		8E4F985B25927171005B1EB6 /* ButtonWithShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4F985A25927171005B1EB6 /* ButtonWithShadow.swift */; };
+		8E5A88CD25986A81002E218F /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E5A88CC25986A81002E218F /* PreviewViewController.swift */; };
 		8E68ABEB2597A39D00ED32C9 /* ChoosePhotoCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E68ABEA2597A39D00ED32C9 /* ChoosePhotoCellModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -53,6 +54,7 @@
 		8E30E974258FC97300433EDA /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		8E4F9855259270A2005B1EB6 /* AddPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhotoViewController.swift; sourceTree = "<group>"; };
 		8E4F985A25927171005B1EB6 /* ButtonWithShadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonWithShadow.swift; sourceTree = "<group>"; };
+		8E5A88CC25986A81002E218F /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
 		8E68ABEA2597A39D00ED32C9 /* ChoosePhotoCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoosePhotoCellModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -103,6 +105,9 @@
 		8E2E5157259654DF00D9A9D7 /* AddPhotoFlow */ = {
 			isa = PBXGroup;
 			children = (
+				8E30E971258FC93700433EDA /* 8_2_1 */,
+				8E5A88CB25986A66002E218F /* 8_2_2 */,
+				8E2E514E259652AB00D9A9D7 /* 8_2_3 */,
 			);
 			path = AddPhotoFlow;
 			sourceTree = "<group>";
@@ -129,10 +134,8 @@
 			isa = PBXGroup;
 			children = (
 				8E2E5157259654DF00D9A9D7 /* AddPhotoFlow */,
-				8E2E514E259652AB00D9A9D7 /* 8_2_3 */,
 				8E2E514D2596529A00D9A9D7 /* Common */,
 				8E30E972258FC96400433EDA /* 2_1_1 */,
-				8E30E971258FC93700433EDA /* 8_2_1 */,
 				8E30E927258FC5C700433EDA /* AppDelegate.swift */,
 				8E30E929258FC5C700433EDA /* SceneDelegate.swift */,
 				8E30E92B258FC5C700433EDA /* ProfileViewController.swift */,
@@ -157,6 +160,14 @@
 				8E30E974258FC97300433EDA /* Colors.swift */,
 			);
 			path = Colors;
+			sourceTree = "<group>";
+		};
+		8E5A88CB25986A66002E218F /* 8_2_2 */ = {
+			isa = PBXGroup;
+			children = (
+				8E5A88CC25986A81002E218F /* PreviewViewController.swift */,
+			);
+			path = 8_2_2;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -291,6 +302,7 @@
 				8E30E92C258FC5C700433EDA /* ProfileViewController.swift in Sources */,
 				8E68ABEB2597A39D00ED32C9 /* ChoosePhotoCellModel.swift in Sources */,
 				8E30E975258FC97300433EDA /* Colors.swift in Sources */,
+				8E5A88CD25986A81002E218F /* PreviewViewController.swift in Sources */,
 				8E4F985B25927171005B1EB6 /* ButtonWithShadow.swift in Sources */,
 				8E2E515C25966C2300D9A9D7 /* ChoosePhotoCell.swift in Sources */,
 				8E4F9856259270A2005B1EB6 /* AddPhotoViewController.swift in Sources */,

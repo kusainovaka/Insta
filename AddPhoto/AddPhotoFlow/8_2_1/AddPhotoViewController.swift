@@ -62,8 +62,8 @@ class AddPhotoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNavBar()
         
+        setupNavBar()
         setupConstraints()
     }
     
@@ -127,7 +127,8 @@ private extension AddPhotoViewController {
     }
     
     @objc func didTapOnPreview() {
-        navigationController?.popViewController(animated: true)
+        let previewVC = PreviewViewController()
+        navigationController?.pushViewController(previewVC, animated: true)
     }
     
     private func getImages() {

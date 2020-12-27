@@ -20,10 +20,10 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        layoutUI()
+        setupConstraints()
     }
     
-    private func layoutUI() {
+    private func setupConstraints() {
         view.addSubview(addButton)
         addButton.addTarget(self, action: #selector(didTapOnButton), for: .touchUpInside)
         [addButton.centerYAnchor.constraint(equalTo: view.centerYAnchor),
