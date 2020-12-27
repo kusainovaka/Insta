@@ -47,7 +47,8 @@ class AddPhotoViewController: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         collectionView.backgroundColor = .clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.register(ChoosePhotoCell.self, forCellWithReuseIdentifier: ChoosePhotoCell.id)
+        collectionView.register(AddPhotoCollectionCell.self,
+                                forCellWithReuseIdentifier: AddPhotoCollectionCell.id)
         return collectionView
     }()
     
@@ -58,7 +59,11 @@ class AddPhotoViewController: UIViewController {
         return imageView
     }()
     
-    private var dataModels = [ChoosePhotoCellModel]()
+    private var array: [AddPhotoCollectionCellModel] = [
+        .init(type: .selected, image: nil), .init(type: .add),
+        .init(type: .empty), .init(type: .empty),
+        .init(type: .empty), .init(type: .empty)
+    ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -183,18 +188,12 @@ private extension AddPhotoViewController {
 
 extension AddPhotoViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return array.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ChoosePhotoCell.id, for: indexPath) as? ChoosePhotoCell else { return .init() }
-        //        let model = dataModels[indexPath.row]
-        //        cell.config(with: model)
-        cell.backgroundColor = .red
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AddPhotoCollectionCell.id, for: indexPath) as? AddPhotoCollectionCell else { return .init() }
+        cell.config(with: array[indexPath.row])
         return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
     }
 }

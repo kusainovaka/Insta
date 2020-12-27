@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8E2E5150259654AE00D9A9D7 /* ChoosePhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2E514F259654AE00D9A9D7 /* ChoosePhotoViewController.swift */; };
-		8E2E515C25966C2300D9A9D7 /* ChoosePhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2E515B25966C2300D9A9D7 /* ChoosePhotoCell.swift */; };
+		8E2E515C25966C2300D9A9D7 /* ChoosePhotoCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2E515B25966C2300D9A9D7 /* ChoosePhotoCollectionCell.swift */; };
 		8E30E928258FC5C700433EDA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E30E927258FC5C700433EDA /* AppDelegate.swift */; };
 		8E30E92A258FC5C700433EDA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E30E929258FC5C700433EDA /* SceneDelegate.swift */; };
 		8E30E92C258FC5C700433EDA /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E30E92B258FC5C700433EDA /* ProfileViewController.swift */; };
@@ -18,6 +18,8 @@
 		8E4F9856259270A2005B1EB6 /* AddPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4F9855259270A2005B1EB6 /* AddPhotoViewController.swift */; };
 		8E4F985B25927171005B1EB6 /* ButtonWithShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4F985A25927171005B1EB6 /* ButtonWithShadow.swift */; };
 		8E5A88CD25986A81002E218F /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E5A88CC25986A81002E218F /* PreviewViewController.swift */; };
+		8E5A88D825988ABA002E218F /* AddPhotoCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E5A88D725988ABA002E218F /* AddPhotoCollectionCell.swift */; };
+		8E5A88DD25988D9F002E218F /* AddPhotoCollectionCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E5A88DC25988D9F002E218F /* AddPhotoCollectionCellModel.swift */; };
 		8E68ABEB2597A39D00ED32C9 /* ChoosePhotoCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E68ABEA2597A39D00ED32C9 /* ChoosePhotoCellModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -40,7 +42,7 @@
 
 /* Begin PBXFileReference section */
 		8E2E514F259654AE00D9A9D7 /* ChoosePhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoosePhotoViewController.swift; sourceTree = "<group>"; };
-		8E2E515B25966C2300D9A9D7 /* ChoosePhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoosePhotoCell.swift; sourceTree = "<group>"; };
+		8E2E515B25966C2300D9A9D7 /* ChoosePhotoCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoosePhotoCollectionCell.swift; sourceTree = "<group>"; };
 		8E30E924258FC5C700433EDA /* AddPhoto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AddPhoto.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E30E927258FC5C700433EDA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8E30E929258FC5C700433EDA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -55,6 +57,8 @@
 		8E4F9855259270A2005B1EB6 /* AddPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhotoViewController.swift; sourceTree = "<group>"; };
 		8E4F985A25927171005B1EB6 /* ButtonWithShadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonWithShadow.swift; sourceTree = "<group>"; };
 		8E5A88CC25986A81002E218F /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
+		8E5A88D725988ABA002E218F /* AddPhotoCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhotoCollectionCell.swift; sourceTree = "<group>"; };
+		8E5A88DC25988D9F002E218F /* AddPhotoCollectionCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhotoCollectionCellModel.swift; sourceTree = "<group>"; };
 		8E68ABEA2597A39D00ED32C9 /* ChoosePhotoCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoosePhotoCellModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -97,7 +101,7 @@
 			children = (
 				8E2E514F259654AE00D9A9D7 /* ChoosePhotoViewController.swift */,
 				8E68ABEA2597A39D00ED32C9 /* ChoosePhotoCellModel.swift */,
-				8E2E515B25966C2300D9A9D7 /* ChoosePhotoCell.swift */,
+				8E2E515B25966C2300D9A9D7 /* ChoosePhotoCollectionCell.swift */,
 			);
 			path = 8_2_3;
 			sourceTree = "<group>";
@@ -150,6 +154,8 @@
 			isa = PBXGroup;
 			children = (
 				8E4F9855259270A2005B1EB6 /* AddPhotoViewController.swift */,
+				8E5A88D725988ABA002E218F /* AddPhotoCollectionCell.swift */,
+				8E5A88DC25988D9F002E218F /* AddPhotoCollectionCellModel.swift */,
 			);
 			path = 8_2_1;
 			sourceTree = "<group>";
@@ -299,12 +305,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E5A88D825988ABA002E218F /* AddPhotoCollectionCell.swift in Sources */,
 				8E30E92C258FC5C700433EDA /* ProfileViewController.swift in Sources */,
 				8E68ABEB2597A39D00ED32C9 /* ChoosePhotoCellModel.swift in Sources */,
+				8E5A88DD25988D9F002E218F /* AddPhotoCollectionCellModel.swift in Sources */,
 				8E30E975258FC97300433EDA /* Colors.swift in Sources */,
 				8E5A88CD25986A81002E218F /* PreviewViewController.swift in Sources */,
 				8E4F985B25927171005B1EB6 /* ButtonWithShadow.swift in Sources */,
-				8E2E515C25966C2300D9A9D7 /* ChoosePhotoCell.swift in Sources */,
+				8E2E515C25966C2300D9A9D7 /* ChoosePhotoCollectionCell.swift in Sources */,
 				8E4F9856259270A2005B1EB6 /* AddPhotoViewController.swift in Sources */,
 				8E30E928258FC5C700433EDA /* AppDelegate.swift in Sources */,
 				8E2E5150259654AE00D9A9D7 /* ChoosePhotoViewController.swift in Sources */,

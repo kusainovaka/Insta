@@ -1,5 +1,5 @@
 //
-//  ChoosePhotoCell.swift
+//  ChoosePhotoCollectionCell.swift
 //  AddPhoto
 //
 //  Created by Kamila on 26.12.2020.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ChoosePhotoCell: UICollectionViewCell {
+class ChoosePhotoCollectionCell: UICollectionViewCell {
     
     static var id = "ChoosePhotoCell"
     private let imageView: UIImageView = {

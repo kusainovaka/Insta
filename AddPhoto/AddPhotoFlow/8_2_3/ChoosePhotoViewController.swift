@@ -48,7 +48,8 @@ class ChoosePhotoViewController: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         collectionView.backgroundColor = .clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.register(ChoosePhotoCell.self, forCellWithReuseIdentifier: ChoosePhotoCell.id)
+        collectionView.register(ChoosePhotoCollectionCell.self,
+                                forCellWithReuseIdentifier: ChoosePhotoCollectionCell.id)
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: cellSize, right: 0)
         return collectionView
     }()
@@ -161,7 +162,7 @@ extension ChoosePhotoViewController: UICollectionViewDataSource, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ChoosePhotoCell.id, for: indexPath) as? ChoosePhotoCell else { return .init() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ChoosePhotoCollectionCell.id, for: indexPath) as? ChoosePhotoCollectionCell else { return .init() }
         let model = dataModels[indexPath.row]
         cell.config(with: model)
         return cell
