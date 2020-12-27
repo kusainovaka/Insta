@@ -55,21 +55,25 @@ class AddPhotoViewController: UIViewController {
     private let previewImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = .red
+        imageView.layer.cornerRadius = 8
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
     private var array: [AddPhotoCollectionCellModel] = [
-        .init(type: .selected, image: nil), .init(type: .add),
+        .init(type: .empty), .init(type: .empty),
         .init(type: .empty), .init(type: .empty),
         .init(type: .empty), .init(type: .empty)
     ]
+    
+    private var selectedImaged = [UIImage?]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupNavBar()
         setupConstraints()
+        getImages()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -122,9 +126,6 @@ class AddPhotoViewController: UIViewController {
 
 private extension AddPhotoViewController {
     @objc func didTapOnAddButton() {
-        let choosePhotoVC = ChoosePhotoViewController()
-        choosePhotoVC.modalPresentationStyle = .overFullScreen
-        navigationController?.present(choosePhotoVC, animated: true, completion: nil)
     }
     
     @objc func didTapOnClose() {
@@ -133,26 +134,68 @@ private extension AddPhotoViewController {
     
     @objc func didTapOnPreview() {
         let previewVC = PreviewViewController()
+        var previewImages = [UIImage]()
+        array.forEach { model in
+            if let image = model.image {
+                previewImages.append(image)
+            }
+        }
+        previewVC.previewImages = previewImages
         navigationController?.pushViewController(previewVC, animated: true)
     }
     
     private func getImages() {
-        //        var isBegin = true
-        //        let assets = PHAsset.fetchAssets(with: .image, options: nil)
-        //        let manager = PHImageManager.default()
-        //
-        //        assets.enumerateObjects({ (object, number, stop) in
-        //            let size = CGSize(width: self.cellSize, height: self.cellSize)
-        //            manager.requestImage(for: object, targetSize: size, contentMode: .aspectFill, options: nil) { [weak self] image, info in
-        //                if isBegin {
-        //                    let model = ChoosePhotoCellModel(id: number, image: image, isSelect: false)
-        //                    self?.dataModels.append(model)
-        //                    self?.collectionView.reloadData()
-        //                }
-        //            }
-        //        })
-        //        isBegin = dataModels.isEmpty
-        //        collectionView.reloadData()
+        let assets = PHAsset.fetchAssets(with: .image, options: nil)
+        let manager = PHImageManager.default()
+        
+        assets.enumerateObjects({ (object, number, stop) in
+            let size = CGSize(width: self.cellSize, height: self.cellSize)
+            manager.requestImage(for: object, targetSize: size, contentMode: .aspectFill, options: nil) { [weak self] image, info in
+                if self?.selectedImaged.isEmpty == true {
+                    self?.selectedImaged.append(image)
+                    self?.previewImageView.image = image
+                    self?.test()
+                }
+            }
+        })
+    }
+    
+    func test() {
+        // MARK: Set selected
+        guard !selectedImaged.isEmpty else {
+            array[0].type = .add
+        
+            collectionView.reloadData()
+            return
+        }
+        
+        for (imageArray, model) in selectedImaged.enumerated() {
+            for (arrayIndex, _) in array.enumerated() {
+                if imageArray == arrayIndex {
+                    array[arrayIndex].image = model
+                    array[arrayIndex].type = .selected
+                    break
+                }
+            }
+        }
+        
+        test2()
+    }
+    
+    func test2() {
+        for (index, model) in array.enumerated() {
+            let lastIndex = array.count - 1
+            if model.type == .add {
+                array[index].type = .empty
+            }
+            
+            if index != lastIndex {
+                if model.type == .selected {
+                    array[index + 1].type = .add
+                }
+            }
+        }
+        collectionView.reloadData()
     }
     
     func checkPermissionToPhotoLibrary() {
@@ -195,5 +238,20 @@ extension AddPhotoViewController: UICollectionViewDataSource, UICollectionViewDe
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AddPhotoCollectionCell.id, for: indexPath) as? AddPhotoCollectionCell else { return .init() }
         cell.config(with: array[indexPath.row])
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let some = array[indexPath.row]
+        switch some.type {
+            case .add:
+                let choosePhotoVC = ChoosePhotoViewController()
+                choosePhotoVC.modalPresentationStyle = .overFullScreen
+                navigationController?.present(choosePhotoVC, animated: true, completion: nil)
+            case .selected:
+                guard let image = some.image else { return }
+                previewImageView.image = image
+            case .empty:
+                break
+        }
     }
 }

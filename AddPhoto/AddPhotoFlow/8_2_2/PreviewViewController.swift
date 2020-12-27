@@ -11,7 +11,7 @@ class PreviewViewController: UIViewController {
     
     private let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleToFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -36,11 +36,17 @@ class PreviewViewController: UIViewController {
         return stackView
     }()
     
+    var previewImages = [UIImage]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.isNavigationBarHidden = true
         
         setupConstraints()
+        
+        if let first = previewImages.first {
+            imageView.image = first
+        }
     }
     
     func setupConstraints() {
@@ -68,15 +74,19 @@ class PreviewViewController: UIViewController {
     }
     
     private func setupStackView() {
-        for i in 0...5 {
+        stackView.subviews.forEach { someView in
+            stackView.removeArrangedSubview(someView)
+        }
+        for (index, image) in previewImages.enumerated() {
             let stackButton = UIButton()
             stackButton.translatesAutoresizingMaskIntoConstraints = false
-            stackButton.backgroundColor = .yellow
+            stackButton.setImage(image, for: .normal)
             stackButton.addTarget(self, action: #selector(didTapOnSome), for: .touchUpInside)
-            setupButtonColor(with: stackButton, isSelected: false)
+            setupButtonColor(with: stackButton, isSelected: index == 0)
             
             let size = (UIScreen.main.bounds.width - (16 *  7)) / 6
             stackButton.layer.cornerRadius = size / 2
+            stackButton.imageView?.layer.cornerRadius =  size / 2
             [stackButton.heightAnchor.constraint(equalToConstant: 42),
              stackButton.widthAnchor.constraint(equalToConstant: size)
             ].forEach { $0.isActive = true }

@@ -78,7 +78,7 @@ class AddPhotoCollectionCell: UICollectionViewCell {
                 imageView.image = model.image
                 imageView.contentMode = .scaleAspectFill
                 deleteButton.isHidden = false
-                backgroundColor = Colors.colors.block_2_1_registation_title
+                backgroundColor = .clear
         }
     }
 }
