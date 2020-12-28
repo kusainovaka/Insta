@@ -76,17 +76,14 @@ class AddPhotoCollectionCell: UICollectionViewCell {
         switch model.type {
             case .empty:
                 imageView.image = nil
-                deleteButton.isHidden = true
                 backgroundColor = Colors.colors.block_2_1_registation_title
             case .add:
                 imageView.image = UIImage(named: "add-icon")
                 imageView.contentMode = .center
-                deleteButton.isHidden = true
                 backgroundColor = Colors.colors.block_2_1_registation_title
             case .selected:
                 imageView.image = model.image
                 imageView.contentMode = .scaleAspectFill
-                deleteButton.isHidden = false
                 backgroundColor = .clear
         }
     }

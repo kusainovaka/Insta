@@ -66,8 +66,6 @@ class AddPhotoViewController: UIViewController {
         .init(type: .empty), .init(type: .empty),
         .init(type: .empty), .init(type: .empty)
     ]
-
-//    private var selectedImaged = [UIImage?]()
     private var dataModels = [ChoosePhotoCellModel]()
 
     override func viewDidLoad() {
@@ -226,29 +224,26 @@ private extension AddPhotoViewController {
         guard !dataModels.isEmpty else {
             array[0].type = .add
             collectionView.reloadData()
-            
             return
         }
-        var selectedIndex: Int?
-
-        for (imageArray, model) in dataModels.enumerated() {
-            for (arrayIndex, _) in array.enumerated() {
-                if imageArray == arrayIndex {
-                    if model.isSelect {
-                        array[arrayIndex].image = model.image
-                        array[arrayIndex].type = .selected
-                        selectedIndex = arrayIndex + 1
-                    } else {
-                        array[arrayIndex].image = nil
-                        let lastIndex = array.count - 1
-                        if arrayIndex != lastIndex {
-                            if let some = selectedIndex {
-                                array[some].type = .add
-                            } else {
-                                array[arrayIndex + 1].type = .empty
-                            }
-                        }
-                    }
+        
+        checkSelected()
+    }
+    
+    func checkSelected() {
+        array.removeAll()
+        // Selected
+        for (_, model) in dataModels.enumerated() where model.isSelect {
+            let photoModel = AddPhotoCollectionCellModel(type: .selected, image: model.image)
+            array.append(photoModel)
+        }
+        let maxImageCount = 6
+        if array.count != maxImageCount {
+            array.append(.init(type: .add))
+            let unSelectedCount = maxImageCount - array.count
+            if unSelectedCount != 0 {
+                for _ in 1...unSelectedCount {
+                    array.append(.init(type: .empty))
                 }
             }
         }
@@ -329,18 +324,13 @@ extension AddPhotoViewController: ChoosePhotoViewControllerDelegate {
 
 extension AddPhotoViewController: AddPhotoCollectionCellDelegate {
     func delete(with cell: AddPhotoCollectionCell) {
-        guard let index = collectionView.indexPath(for: cell) else { return }
-        dataModels[index.row].isSelect = false
-        
-        if index.row != 0 {
-            array[index.row - 1].type = .empty
-            previewImageView.image = array[index.row - 1].image
-        } else {
-//            array[0].type = .add
-//            previewImageView.image = nil
+        guard let cellIndex = collectionView.indexPath(for: cell) else { return }
+        let arrayModel = array[cellIndex.row]
+        for (index, model) in dataModels.enumerated() where model.image == arrayModel.image {
+            dataModels[index].isSelect = false
         }
-        
-        collectionView.reloadData()
+        let lastImage = dataModels.filter { $0.isSelect == true }.last?.image
+        previewImageView.image = lastImage
         test()
     }
 }
