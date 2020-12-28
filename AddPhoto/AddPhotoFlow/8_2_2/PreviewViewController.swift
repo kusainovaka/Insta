@@ -115,39 +115,24 @@ class PreviewViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
-    private func getButton(isSelected: Bool) -> UIButton {
-        let button = UIButton()
-        return button
+    @objc func leftGestureAction() {
+        let last = stackView.subviews.count - 1
+        showNextPhoto(with: last, isRight: false)
     }
     
     @objc func rightGestureAction() {
-        var nextIndex: Int?
-
-        for (index, subView) in stackView.subviews.enumerated() {
-            guard let button = subView as? UIButton else { return }
-            let last = stackView.subviews.count - 1
-            if button.isSelected {
-                setupButtonColor(with: button, isSelected: false)
-                nextIndex = last != index ? index + 1 : index
-            }
-            
-            if nextIndex == index {
-                setupButtonColor(with: button, isSelected: true)
-                imageView.image = button.imageView?.image
-                
-            }
-        }
+        showNextPhoto(with: 0, isRight: true)
     }
     
-    @objc func leftGestureAction() {
+    func showNextPhoto(with last: Int, isRight: Bool) {
         var nextIndex: Int?
-
+        
         for (index, subView) in stackView.subviews.enumerated() {
             guard let button = subView as? UIButton else { return }
-            let last = 0
             if button.isSelected {
                 setupButtonColor(with: button, isSelected: false)
-                nextIndex = last != index ? index - 1 : index
+                let directionIndex = isRight ? index - 1 : index + 1
+                nextIndex = last != index ? directionIndex : index
             }
             
             if let buttonIndex = nextIndex,

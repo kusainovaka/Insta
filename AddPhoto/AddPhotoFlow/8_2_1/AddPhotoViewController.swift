@@ -10,16 +10,6 @@ import Photos
 
 class AddPhotoViewController: UIViewController {
     
-    private let addButton: ButtonWithShadow = {
-        let button = ButtonWithShadow()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Добавить", for: .normal)
-        button.backgroundColor = Colors.colors.block_2_1_button_active
-        button.setTitleColor(Colors.colors.block_8_2_1_button_text, for: .normal)
-        button.addTarget(self, action: #selector(didTapOnAddButton), for: .touchUpInside)
-        return button
-    }()
-    
     private let closeButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -52,13 +42,35 @@ class AddPhotoViewController: UIViewController {
         return collectionView
     }()
     
+    private let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.minimumZoomScale = 1.0
+        scrollView.maximumZoomScale = 10.0
+        scrollView.zoomScale = 1.0
+        scrollView.contentMode = .center
+        scrollView.layer.cornerRadius = 8
+        scrollView.backgroundColor = Colors.colors.block_2_1_registation_title
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        return scrollView
+    }()
+    
     private let previewImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = .red
-        imageView.layer.cornerRadius = 8
-        imageView.layer.masksToBounds = true
+        imageView.backgroundColor = Colors.colors.block_2_1_registation_title
+        imageView.isUserInteractionEnabled = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
+    }()
+    
+    private let gridView = PhotoGridView()
+    private let addButton: ButtonWithShadow = {
+        let button = ButtonWithShadow()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Добавить", for: .normal)
+        button.backgroundColor = Colors.colors.block_2_1_button_active
+        button.setTitleColor(Colors.colors.block_8_2_1_button_text, for: .normal)
+        button.addTarget(self, action: #selector(didTapOnAddButton), for: .touchUpInside)
+        return button
     }()
     
     private var array: [AddPhotoCollectionCellModel] = [
@@ -67,13 +79,14 @@ class AddPhotoViewController: UIViewController {
         .init(type: .empty), .init(type: .empty)
     ]
     private var dataModels = [ChoosePhotoCellModel]()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupNavBar()
         setupConstraints()
         getImages()
+        addGesture()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -99,54 +112,26 @@ class AddPhotoViewController: UIViewController {
           collectionView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 6),
         ].forEach { $0.isActive = true }
         
-        view.addSubview(previewImageView)
+        view.addSubview(scrollView)
+        [ scrollView.topAnchor.constraint(equalTo: previewButton.bottomAnchor, constant: 23),
+          scrollView.bottomAnchor.constraint(equalTo: collectionView.topAnchor, constant: -6),
+          scrollView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -6),
+          scrollView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 6),
+        ].forEach { $0.isActive = true }
+        
+        scrollView.addSubview(previewImageView)
         [ previewImageView.topAnchor.constraint(equalTo: previewButton.bottomAnchor, constant: 23),
           previewImageView.bottomAnchor.constraint(equalTo: collectionView.topAnchor, constant: -6),
           previewImageView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -6),
           previewImageView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 6),
         ].forEach { $0.isActive = true }
-    
         
-        let sixee = (UIScreen.main.bounds.width - 15) / 3
-        let firstLine = getLine()
-        previewImageView.addSubview(firstLine)
-        [ firstLine.topAnchor.constraint(equalTo: previewImageView.topAnchor),
-          firstLine.bottomAnchor.constraint(equalTo: previewImageView.bottomAnchor),
-          firstLine.widthAnchor.constraint(equalToConstant: 1),
-          firstLine.leftAnchor.constraint(equalTo: previewImageView.leftAnchor, constant: sixee),
+        scrollView.addSubview(gridView)
+        [ gridView.topAnchor.constraint(equalTo: previewImageView.topAnchor),
+          gridView.bottomAnchor.constraint(equalTo: previewImageView.bottomAnchor),
+          gridView.leftAnchor.constraint(equalTo: previewImageView.leftAnchor),
+          gridView.rightAnchor.constraint(equalTo: previewImageView.rightAnchor)
         ].forEach { $0.isActive = true }
-        
-        let secondLine = getLine()
-        previewImageView.addSubview(secondLine)
-        [ secondLine.topAnchor.constraint(equalTo: previewImageView.topAnchor),
-          secondLine.bottomAnchor.constraint(equalTo: previewImageView.bottomAnchor),
-          secondLine.widthAnchor.constraint(equalToConstant: 1),
-          secondLine.rightAnchor.constraint(equalTo: previewImageView.rightAnchor, constant: -sixee),
-        ].forEach { $0.isActive = true }
-        
-        
-        let bottomFirst = getLine()
-        previewImageView.addSubview(bottomFirst)
-        [ bottomFirst.rightAnchor.constraint(equalTo: previewImageView.rightAnchor),
-          bottomFirst.leftAnchor.constraint(equalTo: previewImageView.leftAnchor),
-          bottomFirst.heightAnchor.constraint(equalToConstant: 1),
-          bottomFirst.topAnchor.constraint(equalTo: previewImageView.topAnchor, constant: sixee),
-        ].forEach { $0.isActive = true }
-        
-        let bottomSecond = getLine()
-        previewImageView.addSubview(bottomSecond)
-        [ bottomSecond.rightAnchor.constraint(equalTo: previewImageView.rightAnchor),
-          bottomSecond.leftAnchor.constraint(equalTo: previewImageView.leftAnchor),
-          bottomSecond.heightAnchor.constraint(equalToConstant: 1),
-          bottomSecond.bottomAnchor.constraint(equalTo: previewImageView.bottomAnchor, constant: -sixee),
-        ].forEach { $0.isActive = true }
-    }
-    
-    func getLine() -> UIView {
-        let lineView = UIView()
-        lineView.backgroundColor = .white
-        lineView.translatesAutoresizingMaskIntoConstraints = false
-        return lineView
     }
     
     func setupNavBar() {
@@ -164,6 +149,27 @@ class AddPhotoViewController: UIViewController {
          previewButton.heightAnchor.constraint(equalToConstant: 26),
          previewButton.widthAnchor.constraint(greaterThanOrEqualToConstant: 130)
         ].forEach { $0.isActive = true }
+    }
+    
+    func addGesture() {
+        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(startZooming(_:)))
+        previewImageView.addGestureRecognizer(pinchGesture)
+    }
+    
+    @objc func startZooming(_ sender: UIPinchGestureRecognizer) {
+        
+        if sender.state == .began || sender.state == .changed {
+            let currentScale = self.previewImageView.frame.size.width / self.previewImageView.bounds.size.width
+            let newScale = currentScale*sender.scale
+            let transform = CGAffineTransform(scaleX: newScale, y: newScale)
+            self.previewImageView.transform = transform
+            sender.scale = 1
+            
+            if sender.state == .ended {
+                previewImageView.transform = CGAffineTransform.identity
+            }
+            
+        }
     }
 }
 
@@ -201,9 +207,9 @@ private extension AddPhotoViewController {
                 }
             }
         })
-       
+        
         isBegin = dataModels.isEmpty
-
+        
         if let firstImage = dataModels.first?.image {
             previewImageView.image = firstImage
             dataModels[0].isSelect = true
@@ -267,7 +273,7 @@ private extension AddPhotoViewController {
         }
     }
     
-    private func  showAlert() {
+    private func showAlert() {
         DispatchQueue.main.async {
             let title = "Доступ к камере"
             let message = "Нет доступа к камере"
@@ -295,16 +301,16 @@ extension AddPhotoViewController: UICollectionViewDataSource, UICollectionViewDe
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let some = array[indexPath.row]
-        switch some.type {
+        let model = array[indexPath.row]
+        switch model.type {
             case .add:
                 let choosePhotoVC = ChoosePhotoViewController()
                 choosePhotoVC.modalPresentationStyle = .overFullScreen
-                choosePhotoVC.dataModels = dataModels
+                choosePhotoVC.dataModels = dataModels.sorted(by:{ $0.id > $1.id })
                 choosePhotoVC.delegate = self
                 navigationController?.present(choosePhotoVC, animated: true, completion: nil)
             case .selected:
-                guard let image = some.image else { return }
+                guard let image = model.image else { return }
                 previewImageView.image = image
             case .empty:
                 break

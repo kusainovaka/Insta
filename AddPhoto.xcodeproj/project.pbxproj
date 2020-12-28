@@ -22,6 +22,7 @@
 		8E5A88DD25988D9F002E218F /* AddPhotoCollectionCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E5A88DC25988D9F002E218F /* AddPhotoCollectionCellModel.swift */; };
 		8E68ABEB2597A39D00ED32C9 /* ChoosePhotoCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E68ABEA2597A39D00ED32C9 /* ChoosePhotoCellModel.swift */; };
 		8E93338D2598F8030023AF62 /* UIScreen+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E93338C2598F8030023AF62 /* UIScreen+Extension.swift */; };
+		8E933392259A21C00023AF62 /* PhotoGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E933391259A21C00023AF62 /* PhotoGridView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +63,7 @@
 		8E5A88DC25988D9F002E218F /* AddPhotoCollectionCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhotoCollectionCellModel.swift; sourceTree = "<group>"; };
 		8E68ABEA2597A39D00ED32C9 /* ChoosePhotoCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoosePhotoCellModel.swift; sourceTree = "<group>"; };
 		8E93338C2598F8030023AF62 /* UIScreen+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+Extension.swift"; sourceTree = "<group>"; };
+		8E933391259A21C00023AF62 /* PhotoGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGridView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +159,7 @@
 			isa = PBXGroup;
 			children = (
 				8E4F9855259270A2005B1EB6 /* AddPhotoViewController.swift */,
+				8E933391259A21C00023AF62 /* PhotoGridView.swift */,
 				8E5A88D725988ABA002E218F /* AddPhotoCollectionCell.swift */,
 				8E5A88DC25988D9F002E218F /* AddPhotoCollectionCellModel.swift */,
 			);
@@ -319,6 +322,7 @@
 				8E2E515C25966C2300D9A9D7 /* ChoosePhotoCollectionCell.swift in Sources */,
 				8E4F9856259270A2005B1EB6 /* AddPhotoViewController.swift in Sources */,
 				8E30E928258FC5C700433EDA /* AppDelegate.swift in Sources */,
+				8E933392259A21C00023AF62 /* PhotoGridView.swift in Sources */,
 				8E2E5150259654AE00D9A9D7 /* ChoosePhotoViewController.swift in Sources */,
 				8E30E92A258FC5C700433EDA /* SceneDelegate.swift in Sources */,
 			);
