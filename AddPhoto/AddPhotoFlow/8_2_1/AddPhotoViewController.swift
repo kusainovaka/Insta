@@ -205,7 +205,7 @@ private extension AddPhotoViewController {
         })
        
         isBegin = dataModels.isEmpty
-        
+
         if let firstImage = dataModels.first?.image {
             previewImageView.image = firstImage
             dataModels[0].isSelect = true
@@ -319,10 +319,10 @@ extension AddPhotoViewController: UICollectionViewDataSource, UICollectionViewDe
 
 extension AddPhotoViewController: ChoosePhotoViewControllerDelegate {
     func didSelect(images: [ChoosePhotoCellModel]) {
-        dataModels = images
+        dataModels = images.sorted(by:{ $0.isSelect && !$1.isSelect })
         
-        let some = dataModels.first { $0.isSelect == true }?.image
-        previewImageView.image = some
+        let firstImage = dataModels.first { $0.isSelect == true }?.image
+        previewImageView.image = firstImage
         test()
     }
 }
