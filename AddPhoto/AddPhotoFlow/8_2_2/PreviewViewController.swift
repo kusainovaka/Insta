@@ -40,6 +40,7 @@ class PreviewViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = Colors.colors.block_8_2_1_background
         navigationController?.isNavigationBarHidden = true
         
         setupConstraints()

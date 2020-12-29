@@ -157,18 +157,12 @@ class AddPhotoViewController: UIViewController {
     }
     
     @objc func startZooming(_ sender: UIPinchGestureRecognizer) {
-        
         if sender.state == .began || sender.state == .changed {
             let currentScale = self.previewImageView.frame.size.width / self.previewImageView.bounds.size.width
             let newScale = currentScale*sender.scale
             let transform = CGAffineTransform(scaleX: newScale, y: newScale)
             self.previewImageView.transform = transform
             sender.scale = 1
-            
-            if sender.state == .ended {
-                previewImageView.transform = CGAffineTransform.identity
-            }
-            
         }
     }
 }
@@ -213,7 +207,7 @@ private extension AddPhotoViewController {
         if let firstImage = dataModels.first?.image {
             previewImageView.image = firstImage
             dataModels[0].isSelect = true
-            test()
+            checkSelected()
         }
     }
     
@@ -225,20 +219,14 @@ private extension AddPhotoViewController {
         }
     }
     
-    func test() {
-        // MARK: Set selected
+    func checkSelected() {
         guard !dataModels.isEmpty else {
             array[0].type = .add
             collectionView.reloadData()
             return
         }
         
-        checkSelected()
-    }
-    
-    func checkSelected() {
         array.removeAll()
-        // Selected
         for (_, model) in dataModels.enumerated() where model.isSelect {
             let photoModel = AddPhotoCollectionCellModel(type: .selected, image: model.image)
             array.append(photoModel)
@@ -324,7 +312,7 @@ extension AddPhotoViewController: ChoosePhotoViewControllerDelegate {
         
         let firstImage = dataModels.first { $0.isSelect == true }?.image
         previewImageView.image = firstImage
-        test()
+        checkSelected()
     }
 }
 
@@ -337,6 +325,6 @@ extension AddPhotoViewController: AddPhotoCollectionCellDelegate {
         }
         let lastImage = dataModels.filter { $0.isSelect == true }.last?.image
         previewImageView.image = lastImage
-        test()
+        checkSelected()
     }
 }
